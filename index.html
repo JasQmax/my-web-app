@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operating Theatre Blood Product Tracker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f9f9f9;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #efeff2;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #7187e8;
+    }
+
+    input[type="number"] {
+      width: 80px;
+      padding: 5px;
+    }
+
+    button {
+      padding: 8px 16px;
+      background-color: #4778b0;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    button:hover:not(:disabled) {
+      background-color: #45a049;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      color: #555;
+      font-size: 14px;
+    }
+
+    .unit-label {
+      font-size: 0.9em;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Operating Theatre Blood Product Tracker</h1>
+  <div class="container">
+    <table>
+      <thead>
+        <tr>
+          <th>Blood Product</th>
+          <th>Quantity Available</th>
+          <th>Total Used</th>
+          <th>Quantity Pending</th>
+          <th>Add Stock</th>
+          <th>Use Stock</th>
+          <th>Ordered</th>
+          <th>Update</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>RBC</td>
+          <td>
+            <span id="available-rbc">0</span>
+            <span class="unit-label">units</span>
+          </td>
+          <td><span id="used-rbc-total">0</span> <span class="unit-label">units</span></td>
+          <td><span id="ordered-rbc-total">0</span> <span class="unit-label">units</span></td>
+          <td><input type="number" id="add-rbc" min="0" value="0"></td>
+          <td><input type="number" id="use-rbc" min="0" value="0"></td>
+          <td><input type="number" id="order-rbc" min="0" value="0"></td>
+          <td><button onclick="updateProduct('rbc')">Update</button></td>
+        </tr>
+        <tr>
+          <td>Platelets</td>
+          <td>
+            <span id="available-platelets">0</span>
+            <span class="unit-label">units</span>
+          </td>
+          <td><span id="used-platelets-total">0</span> <span class="unit-label">units</span></td>
+          <td><span id="ordered-platelets-total">0</span> <span class="unit-label">units</span></td>
+          <td><input type="number" id="add-platelets" min="0" value="0"></td>
+          <td><input type="number" id="use-platelets" min="0" value="0"></td>
+          <td><input type="number" id="order-platelets" min="0" value="0"></td>
+          <td><button onclick="updateProduct('platelets')">Update</button></td>
+        </tr>
+        <tr>
+          <td>FFP</td>
+          <td>
+            <span id="available-ffp">0</span>
+            <span class="unit-label">units</span>
+          </td>
+          <td><span id="used-ffp-total">0</span> <span class="unit-label">units</span></td>
+          <td><span id="ordered-ffp-total">0</span> <span class="unit-label">units</span></td>
+          <td><input type="number" id="add-ffp" min="0" value="0"></td>
+          <td><input type="number" id="use-ffp" min="0" value="0"></td>
+          <td><input type="number" id="order-ffp" min="0" value="0"></td>
+          <td><button onclick="updateProduct('ffp')">Update</button></td>
+        </tr>
+        <td>Cryoprecipitate</td>
+          <td>
+            <span id="available-cryoprecipitate">0</span>
+            <span class="unit-label">units</span>
+          </td>
+          <td><span id="used-cryoprecipitate-total">0</span> <span class="unit-label">units</span></td>
+          <td><span id="ordered-cryoprecipitate-total">0</span> <span class="unit-label">units</span></td>
+          <td><input type="number" id="add-cryoprecipitate" min="0" value="0"></td>
+          <td><input type="number" id="use-cryoprecipitate" min="0" value="0"></td>
+          <td><input type="number" id="order-cryoprecipitate" min="0" value="0"></td>
+          <td><button onclick="updateProduct('cryoprecipitate')">Update</button></td>
+        <tr>
+          <td>Prothrombinex</td>
+          <td>
+            <span id="available-prothrombinex">0</span>
+            <span class="unit-label">ampules</span>
+          </td>
+          <td><span id="used-prothrombinex-total">0</span> <span class="unit-label">ampules</span></td>
+          <td><span id="ordered-prothrombinex-total">0</span> <span class="unit-label">ampules</span></td>
+          <td><input type="number" id="add-prothrombinex" min="0" value="0"></td>
+          <td><input type="number" id="use-prothrombinex" min="0" value="0"></td>
+          <td><input type="number" id="order-prothrombinex" min="0" value="0"></td>
+          <td><button onclick="updateProduct('prothrombinex')">Update</button></td>
+        </tr>
+        <tr>
+          <td>Fibrinogen</td>
+          <td>
+            <span id="available-fibrinogen">0</span>
+            <span class="unit-label">ampules</span>
+          </td>
+          <td><span id="used-fibrinogen-total">0</span> <span class="unit-label">ampules</span></td>
+          <td><span id="ordered-fibrinogen-total">0</span> <span class="unit-label">ampules</span></td>
+          <td><input type="number" id="add-fibrinogen" min="0" value="0"></td>
+          <td><input type="number" id="use-fibrinogen" min="0" value="0"></td>
+          <td><input type="number" id="order-fibrinogen" min="0" value="0"></td>
+          <td><button onclick="updateProduct('fibrinogen')">Update</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2025 J Tong </div>
+
+  <script>
+    // Initialize inventory
+    const inventory = {
+      rbc: { available: 0, used: 0, ordered: 0 },
+      platelets: { available: 0, used: 0, ordered: 0 },
+      ffp: { available: 0, used: 0, ordered: 0 },
+      cryoprecipitate: { available: 0, used: 0, ordered: 0 },
+      prothrombinex: { available: 0, used: 0, ordered: 0 },
+      fibrinogen: { available: 0, used: 0, ordered: 0 },
+    };
+
+    // Function to update product stock
+    function updateProduct(product) {
+      const addInput = document.getElementById(`add-${product}`);
+      const useInput = document.getElementById(`use-${product}`);
+      const orderInput = document.getElementById(`order-${product}`);
+      const availableSpan = document.getElementById(`available-${product}`);
+      const usedTotalSpan = document.getElementById(`used-${product}-total`);
+      const orderedTotalSpan = document.getElementById(`ordered-${product}-total`);
+
+      const addQuantity = parseInt(addInput.value) || 0;
+      const useQuantity = parseInt(useInput.value) || 0;
+      const orderQuantity = parseInt(orderInput.value) || 0;
+
+      // Check for valid subtraction
+      if (useQuantity > inventory[product].available) {
+        alert(`Error: Cannot use more ${product.toUpperCase()} than available.`);
+        return;
+      }
+
+      // Update inventory
+      inventory[product].available += addQuantity - useQuantity;
+      inventory[product].used += useQuantity;
+      inventory[product].ordered = orderQuantity;
+
+      // Update the display
+      availableSpan.textContent = inventory[product].available;
+      usedTotalSpan.textContent = inventory[product].used;
+      orderedTotalSpan.textContent = inventory[product].ordered;
+
+      // Reset input fields
+      addInput.value = 0;
+      useInput.value = 0;
+      orderInput.value = 0;
+    }
+  </script>
+
+</body>
+</html>
